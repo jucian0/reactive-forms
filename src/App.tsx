@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import { useFormControl, useFormGroup } from './RForm';
+import { useFormControl, useFormGroup, useRawControl } from './RForm';
 import { Validators, Number, String } from './RForm/Validations';
 import Select from 'react-select'
 
@@ -13,7 +13,7 @@ const options = [
 
 const App: React.FC = () => {
 
-  const test = useFormControl(
+  const { ref: testRef, value, error } = useFormControl(
     '',
     [
       Number.is('Age must be a number'),
@@ -23,7 +23,7 @@ const App: React.FC = () => {
   )
 
 
-  const { errors, values, props } = useFormGroup({
+  const { errors, values, ref } = useFormGroup({
     userName: useFormControl(
       '',
       [
@@ -49,19 +49,30 @@ const App: React.FC = () => {
         Validators.required('Age is required')
       ]
     ),
-    fruits: useFormControl(
-      options[0].value,
+    fruits: useRawControl(
+      '',
       [
         String.is('Fruit must be a string'),
         Validators.required('Fruit is required')
       ]
-    )
+    ),
+    acept: useFormControl(
+      false,
+      []
+    ),
+    checkbox: useFormControl(
+      false,
+      []
+    ),
   })
 
+  // values.userEmail?.subscribe((e: any) => console.log(e.target.value))
+  //values.fruits?.subscribe((e: any) => console.log(e.target.value))
+  // values.acept?.subscribe((e: any) => console.log(e.target.checked))
+  // values.checkbox?.subscribe((e: any) => console.log(e.target.checked))
+  // values.userName?.subscribe((e: any) => console.log(e.target.value))
 
   values.fruits?.subscribe((e: any) => console.log(e))
-
-  console.log(values.fruits)
 
 
   return (
@@ -69,33 +80,60 @@ const App: React.FC = () => {
       <form>
         <div className="form-group">
           <label>Nome</label>
-          <input type="text" className="form-control" {...props.userName} autoComplete="off" />
+          <input type="text" className="form-control" ref={ref.userName} autoComplete="off" />
           <span className="text-error">{errors.userName}</span>
         </div>
         <div className="form-group">
           <label>E-mail</label>
-          <input type="text" className="form-control" {...props.userEmail} autoComplete="off" />
+          <textarea className="form-control" ref={ref.userEmail} autoComplete="off" />
           <span className="text-error">{errors.userEmail}</span>
         </div>
         <div className="form-group">
           <label>Age</label>
-          <input type="text" className="form-control" {...props.userAge} autoComplete="off" />
+          <input type="text" className="form-control" ref={ref.userAge} autoComplete="off" />
           <span className="text-error">{errors.userAge}</span>
         </div>
 
         <div className="form-group">
           <label>Test</label>
-          <input type="text" className="form-control" {...test.props} autoComplete="off" />
-          <span className="text-error">{test.error}</span>
+          <input type="text" className="form-control" ref={testRef} autoComplete="off" />
+          <span className="text-error">{error}</span>
         </div>
+
         <div className="form-group">
-          <label>Test</label>
+          <label>ReactSelect</label>
           <Select
-            // controlRef={props.ref}
+            {...ref.fruits}
+            isClearable
             options={options}
-            {...props.fruits}
           />
+          <span className="text-error">{errors.fruits}</span>
         </div>
+
+        {/* <div className="form-group">
+          <label>Select</label>
+          <select ref={ref.fruits} id="fruits" multiple size={2}>
+            <option value="">All</option>
+            <option value="tomate">Tomate</option>
+            <option value="tomate">Banana</option>
+            <option value="tomate">Melancia</option>
+          </select>
+          <span className="text-error">{errors.fruits}</span>
+        </div> */}
+
+        <div className="form-group">
+          <label>Acept</label>
+          <input type="radio" className="form-control" ref={ref.acept} id="acept" />
+          <span className="text-error">{error}</span>
+        </div>
+
+        <div className="form-group">
+          <label>Checkbox</label>
+          <input type="checkbox" className="form-control" ref={ref.checkbox} id="acept" />
+
+          <span className="text-error">{error}</span>
+        </div>
+
         <button type="button" className="btn btn-primary">Submit</button>
       </form>
     </div>
