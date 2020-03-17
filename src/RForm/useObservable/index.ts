@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Observable, fromEvent, BehaviorSubject } from "rxjs";
 
-export const useObservable = (initialState = {}) => {
+export const useOf = (initialState = {}) => {
     const [observable$] = useState(new BehaviorSubject(initialState));
 
     const handleNext = (value: typeof initialState) => {

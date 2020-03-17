@@ -13,7 +13,7 @@ const options = [
 
 const App: React.FC = () => {
 
-  const { ref: testRef, value, error } = useFormControl(
+  const { props: testRef, value, error } = useFormControl(
     '',
     [
       Number.is('Age must be a number'),
@@ -23,7 +23,7 @@ const App: React.FC = () => {
   )
 
 
-  const { errors, values, ref } = useFormGroup({
+  const { errors, values, props } = useFormGroup({
     userName: useFormControl(
       '',
       [
@@ -64,6 +64,13 @@ const App: React.FC = () => {
       false,
       []
     ),
+    select: useFormControl(
+      '',
+      [
+        String.is('Fruit must be a string'),
+        Validators.required('Fruit is required')
+      ]
+    )
   })
 
   // values.userEmail?.subscribe((e: any) => console.log(e.target.value))
@@ -71,6 +78,8 @@ const App: React.FC = () => {
   // values.acept?.subscribe((e: any) => console.log(e.target.checked))
   // values.checkbox?.subscribe((e: any) => console.log(e.target.checked))
   // values.userName?.subscribe((e: any) => console.log(e.target.value))
+
+  value.subscribe((e: any) => console.log(e.target.value))
 
   values.fruits?.subscribe((e: any) => console.log(e))
 
@@ -80,56 +89,57 @@ const App: React.FC = () => {
       <form>
         <div className="form-group">
           <label>Nome</label>
-          <input type="text" className="form-control" ref={ref.userName} autoComplete="off" />
+          <input type="text" className="form-control" {...props.userName} autoComplete="off" />
           <span className="text-error">{errors.userName}</span>
         </div>
         <div className="form-group">
           <label>E-mail</label>
-          <textarea className="form-control" ref={ref.userEmail} autoComplete="off" />
+          <textarea className="form-control" {...props.userEmail} autoComplete="off" />
           <span className="text-error">{errors.userEmail}</span>
         </div>
         <div className="form-group">
           <label>Age</label>
-          <input type="text" className="form-control" ref={ref.userAge} autoComplete="off" />
+          <input type="text" className="form-control" {...props.userAge} autoComplete="off" />
           <span className="text-error">{errors.userAge}</span>
         </div>
+        {/* {...props.userAge.userAge} */}
 
         <div className="form-group">
           <label>Test</label>
-          <input type="text" className="form-control" ref={testRef} autoComplete="off" />
+          <input type="text" className="form-control" {...testRef} autoComplete="off" />
           <span className="text-error">{error}</span>
         </div>
 
         <div className="form-group">
           <label>ReactSelect</label>
-          <Select
-            {...ref.fruits}
+          {/* <Select
+            {...props.fruits}
             isClearable
             options={options}
-          />
+          /> */}
           <span className="text-error">{errors.fruits}</span>
         </div>
 
-        {/* <div className="form-group">
+        <div className="form-group">
           <label>Select</label>
-          <select ref={ref.fruits} id="fruits" multiple size={2}>
+          <select {...props.select} id="fruits">
             <option value="">All</option>
             <option value="tomate">Tomate</option>
             <option value="tomate">Banana</option>
             <option value="tomate">Melancia</option>
           </select>
-          <span className="text-error">{errors.fruits}</span>
-        </div> */}
+          <span className="text-error">{errors.select}</span>
+        </div>
 
         <div className="form-group">
           <label>Acept</label>
-          <input type="radio" className="form-control" ref={ref.acept} id="acept" />
+          <input type="radio" className="form-control" {...props.acept} id="acept" />
           <span className="text-error">{error}</span>
         </div>
 
         <div className="form-group">
           <label>Checkbox</label>
-          <input type="checkbox" className="form-control" ref={ref.checkbox} id="acept" />
+          <input type="checkbox" className="form-control" {...props.checkbox} id="acept" />
 
           <span className="text-error">{error}</span>
         </div>
