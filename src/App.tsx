@@ -13,7 +13,7 @@ const options = [
 
 const App: React.FC = () => {
 
-  const { props: testRef, value, error } = useFormControl(
+  const { props: testRef, value$, error } = useFormControl<HTMLInputElement>(
     '',
     [
       Number.is('Age must be a number'),
@@ -23,8 +23,8 @@ const App: React.FC = () => {
   )
 
 
-  const { errors, values, props } = useFormGroup({
-    userName: useFormControl(
+  const { errors, values$, props, values } = useFormGroup({
+    userName: useFormControl<HTMLInputElement>(
       '',
       [
         String.maxLength(10, 'Name have more than 10 characters'),
@@ -33,7 +33,7 @@ const App: React.FC = () => {
         Validators.required('Name is required')
       ]
     ),
-    userEmail: useFormControl(
+    userEmail: useFormControl<HTMLTextAreaElement>(
       '',
       [
         Validators.email('E-mail must be a valid e-mail'),
@@ -41,7 +41,7 @@ const App: React.FC = () => {
       ]
     ),
 
-    userAge: useFormControl(
+    userAge: useFormControl<HTMLInputElement>(
       0,
       [
         Number.is('Age must be a number'),
@@ -56,15 +56,15 @@ const App: React.FC = () => {
         Validators.required('Fruit is required')
       ]
     ),
-    acept: useFormControl(
+    acept: useFormControl<HTMLInputElement>(
       false,
       []
     ),
-    checkbox: useFormControl(
+    checkbox: useFormControl<HTMLInputElement>(
       false,
       []
     ),
-    select: useFormControl(
+    select: useFormControl<HTMLSelectElement>(
       '',
       [
         String.is('Fruit must be a string'),
@@ -79,9 +79,11 @@ const App: React.FC = () => {
   // values.checkbox?.subscribe((e: any) => console.log(e.target.checked))
   // values.userName?.subscribe((e: any) => console.log(e.target.value))
 
-  value.subscribe((e: any) => console.log(e.target.value))
+  value$.subscribe((e: any) => console.log(e.target.value))
 
-  values.fruits?.subscribe((e: any) => console.log(e))
+  values$.fruits?.subscribe((e: any) => console.log(e))
+
+  console.log(values.userEmail)
 
 
   return (
@@ -102,7 +104,6 @@ const App: React.FC = () => {
           <input type="text" className="form-control" {...props.userAge} autoComplete="off" />
           <span className="text-error">{errors.userAge}</span>
         </div>
-        {/* {...props.userAge.userAge} */}
 
         <div className="form-group">
           <label>Test</label>
@@ -112,11 +113,11 @@ const App: React.FC = () => {
 
         <div className="form-group">
           <label>ReactSelect</label>
-          {/* <Select
+          <Select
             {...props.fruits}
             isClearable
             options={options}
-          /> */}
+          />
           <span className="text-error">{errors.fruits}</span>
         </div>
 
