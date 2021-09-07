@@ -27,8 +27,8 @@ const App: React.FC = () => {
     userName: useFormControl<HTMLInputElement>(
       '',
       [
-        String.maxLength(10, 'Name have more than 10 characters'),
-        String.minLength(3, 'Name have less than 3 characters'),
+        String.maxLength(10, 'Name has more than 10 characters'),
+        String.minLength(3, 'Name has less than 3 characters'),
         String.is('Name must be a string'),
         Validators.required('Name is required')
       ]
