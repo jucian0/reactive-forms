@@ -1,44 +1,92 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Logo](img/logo3.png)
 
-## Available Scripts
+<h1 align="center">Welcome to useForm 👋</h1>
 
-In the project directory, you can run:
+[![GitHub license](https://img.shields.io/badge/License-mit-green)](https://github.com/Jucian0/useform/blob/master/LICENSE) [![GitHub coverage](https://img.shields.io/badge/coverage-96.8%25-brightgreen)](https://github.com/use-form/use-form/tree/master/test) ![npm bundle size](https://img.shields.io/bundlephobia/min/@use-form/use-form) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/@use-form/use-form) [![npm version](https://img.shields.io/badge/npm-v1.0-ff69b4)](https://www.npmjs.com/package/@use-form/use-form) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=React+hook+for+forms+and+validations&url=https://github.com/use-form/use-form&hashtags=reactjs,hook,javascript,forms)
 
-### `yarn start`
+> useFom provide a way to create complex forms easily.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 🏠 [Homepage](https://useform.org)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### ✨ [Demo](https://codesandbox.io/s/useform-2u2ju)
 
-### `yarn test`
+<a href="https://codesandbox.io/s/useform-2u2ju">
+  <img width="150" alt="Example in CodeSandbox" src="https://codesandbox.io/static/img/play-codesandbox.svg">
+</a>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Description
 
-### `yarn build`
+Forms are an important part of web applications, and with react it's possible to create greats forms,  
+react hooks are a game-changer when we think about forms, with hooks is very simple to create forms, and you can go on without libraries.  
+But when we wanna complex forms with many validations and complex objects with several layer and properties is appropriate to use a library form to manager the state of inputs and its validations.  
+For this reason, there is useForm, with useForm we can make greats forms and complex validations with less line code.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+UseForm provides a way to create complex forms easily, this hook returns an object of values ​​in the same shape that it receives, this is possible using dot notation. Therefore,
+it does not matter if the object is complex or has many properties or array,
+the result is the same. This process turns very easily to create forms from an object with several layers,
+the same layers and properties are replicated in the final object,
+this approach prevents you to type more code to convert an object from form to backend object type. The same process is realized with errors object and touched objects.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## What to expect with useForm
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Performer forms - useForm provides a way to complete a form and submit it without any rerender, by default useForm creates uncontrolled forms.
+- Easy to write - useForm has an easy way to write forms with less code. register function return necessary input's properties and it is all we need to manage all events in a native HTML `input`. Writhe forms without form tag.
+- Easy validation - By default useform uses yup validation, we can write complex validation without effort.
 
-### `yarn eject`
+## Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```
+  npm i @use-form/use-form
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+  yarn add @use-form/use-form
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Usage
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+`useForm` provides a `register` function, this function as a link with input and a object property of form state.
 
-## Learn More
+<QuickStartDemo />
+<br />
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```javascript
+import { useForm } from "@use-form/use-form";
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+/*
+ *  initial Values optional
+ */
+const initialValues = {
+  name: "Jesse",
+  email: "jesse@jesse.com",
+  score: 25,
+};
+
+const {
+  register,
+  state: { values },
+} = useForm({ initialValues, isControlled: true });
+```
+
+Use dot notation to create advanced objects or to map object values. Type an entry name and type or an entry property object.
+
+```jsx
+   <input placeholder="Name" {...register("name")}/>
+   <input placeholder="E-mail" type="email" {...register("email")}/>
+   <Range {...register("score")}/>
+```
+
+### [Post](https://dev.to/jucian0/building-forms-with-useform-1cna)
+
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/use-form/use-form/issues). You can also take a look at the [contributing guide](https://github.com/Jucian0/use-form/blob/main/CONTRIBUTING.md).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
+
+## 📝 License
+
+Copyright © 2020 [useForm](https://github.com/use-form).<br />
+This project is [MIT](https://github.com/use-form/use-form/blob/53debd6986650f76561795f2069d6eebc5db6c65/LICENSE) licensed.
