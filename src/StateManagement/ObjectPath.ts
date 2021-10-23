@@ -15,7 +15,7 @@ function isPrimitive(value: any) {
    )
 }
 
-export function set(defaultObject: object, prop: string, value: any) {
+export function set(defaultObject: object={}, prop: string, value: any) {
    const paths = propToPath(prop)
 
    function setPropertyValue(object: object, index: number) {
